@@ -1,13 +1,14 @@
 import './App.css';
 import { useState } from 'react';
-import { Ethereum, Bitcoin, Tron } from './chain/index';
+import { Ethereum, Bitcoin, Tron, Cosmos } from './chain/index';
 import { Input } from 'antd';
 
 import { Select } from 'antd';
 const { Option } = Select;
 
 function App() {
-  const mnemonicStr = '';
+  const mnemonicStr =
+    'hope scan cruel dizzy slender pass final defy south subject title crush';
   const [mnemonic, setMnemonic] = useState(mnemonicStr);
   const [chain, setChain] = useState('Ethereum');
 
@@ -38,10 +39,12 @@ function App() {
         <Option value="Ethereum">Ethereum</Option>
         <Option value="Bitcoin">Bitcoin</Option>
         <Option value="Tron">Tron</Option>
+        <Option value="Cosmos">Cosmos</Option>
       </Select>
       {chain === 'Ethereum' && <Ethereum mnemonic={mnemonic} />}
       {chain === 'Bitcoin' && <Bitcoin mnemonic={mnemonic} />}
       {chain === 'Tron' && <Tron mnemonic={mnemonic} />}
+      {chain === 'Cosmos' && <Cosmos mnemonic={mnemonic} />}
     </div>
   );
 }
