@@ -21,13 +21,11 @@ async function createWalletFromMnemonic(mnemonic: string) {
 }
 function Tron({ mnemonic }: { mnemonic: string }) {
   const [address, setAddress] = useState<undefined | string>('');
-  const [extendedKey, setExtendedKey] = useState('');
   const [publicKey, setPublicKey] = useState('');
-  const [wallet, setWallet] = useState<null>(null);
-  const [derivePath, setDerivePath] = useState('');
+  // const [wallet, setWallet] = useState<null>(null);
   const importWallet = async () => {
     const wallet = await createWalletFromMnemonic(mnemonic);
-    setWallet(wallet);
+    // setWallet(wallet);
     // setExtendedKey(extendedKey);
     setPublicKey(wallet.publicKey);
     setAddress(wallet.address);

@@ -1,18 +1,8 @@
 import { useState } from 'react';
 import { Divider, Button, Input } from 'antd';
 import { utils } from 'ethers';
-const txStr = {
-  to: '0xE6F4142dfFA574D1d9f18770BF73814df07931F3',
-  nonce: 6,
-  gasLimit: 21000,
-  value: 0,
-  chainId: 5,
-  type: 2,
-  maxFeePerGas: 18,
-  maxPriorityFeePerGas: 2,
-  accessList: [],
-};
-function Ethereum({ mnemonic }: { mnemonic : string}) {
+
+function Ethereum({ mnemonic }: { mnemonic: string }) {
   const [address, setAddress] = useState<undefined | string>('');
   const [extendedKey, setExtendedKey] = useState('');
   const [publicKey, setPublicKey] = useState('');
