@@ -16,6 +16,8 @@
     "@cosmjs/encoding": "^0.32.0",
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@nervosnetwork/ckb-sdk-core": "^0.109.0",
+    "@polkadot/api": "^10.11.1",
+    "@polkadot/util-crypto": "^12.6.1",
     "@rollup/plugin-inject": "^5.0.5",
     "antd": "^5.11.2",
     "assert": "^2.1.0",
