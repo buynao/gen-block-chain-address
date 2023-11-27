@@ -4,16 +4,11 @@ import wasm from 'vite-plugin-wasm';
 import inject from '@rollup/plugin-inject';
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
 import polyfillNode from 'rollup-plugin-polyfill-node';
-import nodePolyfills from 'rollup-plugin-node-polyfills';
+import top from 'vite-plugin-top-level-await';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [wasm(), react()],
-  build: {
-    rollupOptions: {
-      plugins: [inject({ Buffer: ['Buffer', 'Buffer'] })],
-    },
-  },
+  plugins: [top(), wasm(), react()],
   resolve: {
     alias: {
       crypto: 'crypto-browserify',

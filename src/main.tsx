@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+// @ts-ignore
 import { Buffer as BufferPolyfill } from 'buffer';
 declare var Buffer: typeof BufferPolyfill;
 // @ts-ignore
