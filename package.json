@@ -10,12 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ckb-lumos/hd": "^0.20.0",
     "@cosmjs/amino": "^0.32.0",
     "@cosmjs/crypto": "^0.32.0",
     "@cosmjs/encoding": "^0.32.0",
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@nervosnetwork/ckb-sdk-core": "^0.109.0",
     "@rollup/plugin-inject": "^5.0.5",
     "antd": "^5.11.2",
+    "assert": "^2.1.0",
     "bip32": "^4.0.0",
     "bip39": "^3.1.0",
     "bitcoinjs-lib": "^6.1.5",
@@ -23,6 +26,7 @@
     "buffer-browserify": "^0.2.5",
     "crypto-browserify": "^3.12.0",
     "ethers": "5.7.2",
+    "hdkey": "^2.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rollup-plugin-node-polyfills": "^0.2.1",
