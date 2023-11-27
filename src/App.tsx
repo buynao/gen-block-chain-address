@@ -1,6 +1,14 @@
 import './App.css';
 import { useState } from 'react';
-import { Ethereum, Bitcoin, Tron, Cosmos, Nervos } from './chain/index';
+import {
+  Ethereum,
+  Bitcoin,
+  Tron,
+  Cosmos,
+  Nervos,
+  BitcoinCash,
+  Litecoin,
+} from './chain/index';
 import { Input } from 'antd';
 
 import { Select } from 'antd';
@@ -41,12 +49,16 @@ function App() {
         <Option value="Tron">Tron</Option>
         <Option value="Cosmos">Cosmos</Option>
         <Option value="Nervos">Nervos</Option>
+        <Option value="BitcoinCash">BitcoinCash</Option>
+        <Option value="Litecoin">Litecoin</Option>
       </Select>
       {selectedChain === 'Ethereum' && <Ethereum mnemonic={mnemonic} />}
       {selectedChain === 'Bitcoin' && <Bitcoin mnemonic={mnemonic} />}
       {selectedChain === 'Tron' && <Tron mnemonic={mnemonic} />}
       {selectedChain === 'Cosmos' && <Cosmos mnemonic={mnemonic} />}
       {selectedChain === 'Nervos' && <Nervos mnemonic={mnemonic} />}
+      {selectedChain === 'BitcoinCash' && <BitcoinCash mnemonic={mnemonic} />}
+      {selectedChain === 'Litecoin' && <Litecoin mnemonic={mnemonic} />}
     </div>
   );
 }

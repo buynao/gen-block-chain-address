@@ -21,6 +21,7 @@
     "assert": "^2.1.0",
     "bip32": "^4.0.0",
     "bip39": "^3.1.0",
+    "bitcoincashjs-lib": "^3.3.3",
     "bitcoinjs-lib": "^6.1.5",
     "buffer": "feross/buffer",
     "buffer-browserify": "^0.2.5",

@@ -1,33 +1,49 @@
 import { useState } from 'react';
 import { Divider, Button, Input } from 'antd';
-import CKB from '@nervosnetwork/ckb-sdk-core';
-import { mnemonicToSeedSync } from 'bip39';
 // @ts-ignore
-import HDKey from 'hdkey';
+import * as bitcoin from 'bitcoinjs-lib';
+// @ts-ignore
+import * as bitcoinCashJs from 'bitcoincashjs-lib';
+import * as bip39 from 'bip39';
+import BIP32Factory from 'bip32';
+import * as ecc from 'tiny-secp256k1';
 
+const bip32 = BIP32Factory(ecc);
+function getAddress(publicKeyBuffer: any) {
+  const { address } = bitcoin.payments.p2pkh({
+    pubkey: publicKeyBuffer,
+    network: bitcoinCashJs.networks.litecoin,
+  });
+  return address;
+}
 async function createWalletFromMnemonic(mnemonic: string) {
-  const seed = mnemonicToSeedSync(mnemonic);
-  const hdkey = HDKey.fromMasterSeed(seed);
-  const path = "m/44'/309'/0'/0/0";
-  const derivedKey = hdkey.derive(path);
-  const publicKey = derivedKey.publicKey;
-  const publicKeyHex = Buffer.from(publicKey).toString('hex');
-  const address = new CKB().utils.pubkeyToAddress('0x' + publicKeyHex);
-  return { publicKey, address };
+  const seed = await bip39.mnemonicToSeed(mnemonic);
+  const root = bip32.fromSeed(seed, bitcoinCashJs.networks.litecoin);
+  const path = "m/44'/2'/0'/0/0";
+  const child = root.derivePath(path);
+  const xpub = child.neutered().toBase58();
+  const address = getAddress(child.publicKey);
+  const publicKeyHex = child.publicKey.toString('hex');
+  return { publicKey: publicKeyHex, address, xpub };
 }
 
-function Nervos({ mnemonic }: { mnemonic: string }) {
+function Litecoin({ mnemonic }: { mnemonic: string }) {
   const [address, setAddress] = useState<undefined | string>('');
   const [publicKey, setPublicKey] = useState('');
   const importWallet = async () => {
     const wallet = await createWalletFromMnemonic(mnemonic);
     // setExtendedKey(extendedKey);
-    const publicKeyHex = Buffer.from(wallet.publicKey).toString('hex');
-    setPublicKey('0x' + publicKeyHex);
+    const publicKeyHex = wallet.publicKey;
+    setPublicKey(publicKeyHex);
     setAddress(wallet.address);
   };
-  const publicKeyToAddress = async () => {
-    const address = new CKB().utils.pubkeyToAddress(publicKey);
+  const publicKeyToAddress = () => {
+    // @ts-ignore
+    const publicKeyBuffer = window.Buffer.from(publicKey, 'hex');
+    const { address } = bitcoin.payments.p2pkh({
+      pubkey: publicKeyBuffer,
+      network: bitcoinCashJs.networks.litecoin,
+    });
     setAddress(address);
   };
 
@@ -40,7 +56,7 @@ function Nervos({ mnemonic }: { mnemonic: string }) {
         width: 500,
       }}
     >
-      <h3>Nervos</h3>
+      <h3>Litecoin</h3>
       <Button
         style={{ marginTop: 10, width: '100%' }}
         onClick={() => importWallet()}
@@ -78,4 +94,4 @@ function Nervos({ mnemonic }: { mnemonic: string }) {
   );
 }
 
-export default Nervos;
+export default Litecoin;
