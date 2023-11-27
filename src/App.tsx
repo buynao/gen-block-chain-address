@@ -9,6 +9,7 @@ import {
   BitcoinCash,
   Litecoin,
   Kusama,
+  Polkadot,
 } from './chain/index';
 import { Input } from 'antd';
 
@@ -53,6 +54,7 @@ function App() {
         <Option value="BitcoinCash">BitcoinCash</Option>
         <Option value="Litecoin">Litecoin</Option>
         <Option value="Kusama">Kusama</Option>
+        <Option value="Polkadot">Polkadot</Option>
       </Select>
       {selectedChain === 'Ethereum' && <Ethereum mnemonic={mnemonic} />}
       {selectedChain === 'Bitcoin' && <Bitcoin mnemonic={mnemonic} />}
@@ -62,6 +64,7 @@ function App() {
       {selectedChain === 'BitcoinCash' && <BitcoinCash mnemonic={mnemonic} />}
       {selectedChain === 'Litecoin' && <Litecoin mnemonic={mnemonic} />}
       {selectedChain === 'Kusama' && <Kusama mnemonic={mnemonic} />}
+      {selectedChain === 'Polkadot' && <Polkadot mnemonic={mnemonic} />}
     </div>
   );
 }

@@ -6,6 +6,7 @@ import Nervos from './Nervos';
 import BitcoinCash from './BitcoinCash';
 import Litecoin from './Litecoin';
 import Kusama from './Kusama';
+import Polkadot from './Polkadot';
 export {
   Ethereum,
   Bitcoin,
@@ -15,4 +16,5 @@ export {
   BitcoinCash,
   Litecoin,
   Kusama,
+  Polkadot,
 };
