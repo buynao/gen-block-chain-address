@@ -3,13 +3,8 @@ import { Divider, Button, Input } from 'antd';
 // @ts-ignore
 import bitcoinCashJs from 'bitcoincashjs-lib';
 import * as bip39 from 'bip39';
-import BIP32Factory from 'bip32';
-import * as ecc from 'tiny-secp256k1';
 import * as bitcoin from 'bitcoinjs-lib';
-const bip32 = BIP32Factory(ecc);
-function getAddress(node: any, network?: any): string {
-  return bitcoin.payments.p2pkh({ pubkey: node.publicKey, network }).address!;
-}
+
 async function createWalletFromMnemonic(mnemonic: string) {
   // 确保助记词是有效的
   if (!bip39.validateMnemonic(mnemonic)) {

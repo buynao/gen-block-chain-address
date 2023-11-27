@@ -4,15 +4,8 @@ import { Divider, Button, Input } from 'antd';
 import * as bitcoin from 'bitcoinjs-lib';
 // @ts-ignore
 import * as bitcoinCashJs from 'bitcoincashjs-lib';
-import * as bip39 from 'bip39';
-import BIP32Factory from 'bip32';
-import * as ecc from 'tiny-secp256k1';
 import { Keyring } from '@polkadot/api';
-import {
-  mnemonicGenerate,
-  mnemonicToMiniSecret,
-  encodeAddress,
-} from '@polkadot/util-crypto';
+import { encodeAddress } from '@polkadot/util-crypto';
 
 async function createWalletFromMnemonic(mnemonic: string) {
   // 使用助记词创建钱包
