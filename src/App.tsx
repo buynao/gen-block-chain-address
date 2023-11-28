@@ -10,6 +10,7 @@ import {
   Litecoin,
   Kusama,
   Polkadot,
+  Tezos,
 } from './chain/index';
 import { Input } from 'antd';
 
@@ -17,8 +18,7 @@ import { Select } from 'antd';
 const { Option } = Select;
 
 function App() {
-  const defaultMnemonic =
-    'hope scan cruel dizzy slender pass final defy south subject title crush';
+  const defaultMnemonic = '';
   const [mnemonic, setMnemonic] = useState(defaultMnemonic);
   const [selectedChain, setSelectedChain] = useState('Ethereum');
 
@@ -55,6 +55,7 @@ function App() {
         <Option value="Litecoin">Litecoin</Option>
         <Option value="Kusama">Kusama</Option>
         <Option value="Polkadot">Polkadot</Option>
+        <Option value="Tezos">Tezos</Option>
       </Select>
       {selectedChain === 'Ethereum' && <Ethereum mnemonic={mnemonic} />}
       {selectedChain === 'Bitcoin' && <Bitcoin mnemonic={mnemonic} />}
@@ -65,6 +66,7 @@ function App() {
       {selectedChain === 'Litecoin' && <Litecoin mnemonic={mnemonic} />}
       {selectedChain === 'Kusama' && <Kusama mnemonic={mnemonic} />}
       {selectedChain === 'Polkadot' && <Polkadot mnemonic={mnemonic} />}
+      {selectedChain === 'Tezos' && <Tezos mnemonic={mnemonic} />}
     </div>
   );
 }

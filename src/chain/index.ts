@@ -7,6 +7,8 @@ import BitcoinCash from './BitcoinCash';
 import Litecoin from './Litecoin';
 import Kusama from './Kusama';
 import Polkadot from './Polkadot';
+import Tezos from './Tezos';
+
 export {
   Ethereum,
   Bitcoin,
@@ -17,4 +19,5 @@ export {
   Litecoin,
   Kusama,
   Polkadot,
+  Tezos,
 };
