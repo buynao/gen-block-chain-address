@@ -35,15 +35,9 @@ function App() {
         width: 500,
       }}
     >
-      <Input
-        style={{ width: '100%' }}
-        placeholder="输入助记词"
-        value={mnemonic}
-        onChange={(e) => setMnemonic(e.target.value)}
-      />
       <Select
         defaultValue="Ethereum"
-        style={{ width: 120, marginTop: 20 }}
+        style={{ width: 120 }}
         onChange={handleChainChange}
       >
         <Option value="Ethereum">Ethereum</Option>
@@ -57,6 +51,12 @@ function App() {
         <Option value="Polkadot">Polkadot</Option>
         <Option value="Tezos">Tezos</Option>
       </Select>
+      <Input
+        style={{ width: '100%', marginTop: 20 }}
+        placeholder="输入助记词"
+        value={mnemonic}
+        onChange={(e) => setMnemonic(e.target.value)}
+      />
       {selectedChain === 'Ethereum' && <Ethereum mnemonic={mnemonic} />}
       {selectedChain === 'Bitcoin' && <Bitcoin mnemonic={mnemonic} />}
       {selectedChain === 'Tron' && <Tron mnemonic={mnemonic} />}
