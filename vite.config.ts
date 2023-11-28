@@ -1,14 +1,13 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import wasm from 'vite-plugin-wasm';
-import inject from '@rollup/plugin-inject';
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
-import polyfillNode from 'rollup-plugin-polyfill-node';
+import commonjs from 'vite-plugin-commonjs';
 import top from 'vite-plugin-top-level-await';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [top(), wasm(), react()],
+  plugins: [top(), commonjs(), wasm(), react()],
   resolve: {
     alias: {
       crypto: 'crypto-browserify',
