@@ -18,7 +18,8 @@ import { Select } from 'antd';
 const { Option } = Select;
 
 function App() {
-  const defaultMnemonic = '';
+  const defaultMnemonic =
+    'hope scan cruel dizzy slender pass final defy south subject title crush';
   const [mnemonic, setMnemonic] = useState(defaultMnemonic);
   const [selectedChain, setSelectedChain] = useState('Ethereum');
 

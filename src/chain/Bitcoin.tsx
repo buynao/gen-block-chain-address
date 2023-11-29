@@ -5,6 +5,11 @@ import * as bip39 from 'bip39';
 import BIP32Factory from 'bip32';
 import * as ecc from 'tiny-secp256k1';
 import { BIP32Interface } from 'bip32';
+import { ECPairFactory, ECPairAPI, ECPairInterface } from 'ecpair';
+import * as tinysecp from 'tiny-secp256k1';
+const path = "m/44'/0'/0'/0/0";
+
+const ECPair: ECPairAPI = ECPairFactory(tinysecp);
 const bip32 = BIP32Factory(ecc);
 function getAddress(node: any, network?: any): string {
   return bitcoin.payments.p2pkh({ pubkey: node.publicKey, network }).address!;
@@ -12,22 +17,26 @@ function getAddress(node: any, network?: any): string {
 
 function Bitcoin({ mnemonic }: { mnemonic: string }) {
   const [address, setAddress] = useState<undefined | string>('');
-  const [extendedKey, setExtendedKey] = useState('');
+  // const [extendedKey, setExtendedKey] = useState('');
   const [publicKey, setPublicKey] = useState('');
-  const [wallet, setWallet] = useState<BIP32Interface | null>(null);
-  const [derivePath, setDerivePath] = useState('');
+  const [wallet, setWallet] = useState<ECPairInterface | null>(null);
+  const [root, setRoot] = useState<any | null>(null);
+  // const [derivePath, setDerivePath] = useState('');
   const importWallet = () => {
     const seed = bip39.mnemonicToSeedSync(mnemonic);
-    const node = bip32.fromSeed(seed);
-    const extendedKey = node.neutered().toBase58();
-    const publicKey = node.publicKey.toString('hex');
+    const root = bip32.fromSeed(seed);
+    const node = root.derivePath(path);
+    console.log('>>>>>>>node', node);
+    const signer = ECPair.fromPublicKey(node.publicKey);
     // const strng = node.toBase58();
     // const restored = bip32.fromBase58(strng);
+    console.log('>>>>>>>signer', signer);
     // @ts-ignore
-    setWallet(node);
-    setExtendedKey(extendedKey);
-    setPublicKey(publicKey);
-    setAddress(getAddress(node));
+    setRoot(root);
+    setWallet(signer);
+    // setExtendedKey(extendedKey);
+    setPublicKey(signer.publicKey.toString('hex'));
+    setAddress(getAddress(signer, bitcoin.networks.bitcoin));
   };
   const publicKeyToAddress = () => {
     // @ts-ignore
@@ -38,12 +47,34 @@ function Bitcoin({ mnemonic }: { mnemonic: string }) {
     });
     setAddress(address);
   };
-  const deriveAddress = () => {
-    if (wallet && derivePath) {
-      const derivedWallet = wallet.derivePath(derivePath);
-      setAddress(getAddress(derivedWallet));
-    }
+  const publicKeyToAddress1 = () => {
+    // @ts-ignore
+    const publicKeyBuffer = window.Buffer.from(publicKey, 'hex');
+    const p2wpkh = bitcoin.payments.p2pkh({
+      pubkey: publicKeyBuffer,
+      network: bitcoin.networks.bitcoin,
+    });
+    const { address } = bitcoin.payments.p2sh({ redeem: p2wpkh });
+
+    setAddress(address);
   };
+  const publicKeyToAddress2 = () => {
+    // @ts-ignore
+    const path1 = `m/84'/0'/0'/0/0`;
+    const node = root?.derivePath(path1);
+    const { address } = bitcoin.payments.p2wpkh({
+      pubkey: node.publicKey,
+      network: bitcoin.networks.bitcoin,
+    });
+
+    setAddress(address);
+  };
+  // const deriveAddress = () => {
+  //   if (wallet && derivePath) {
+  //     const derivedWallet = wallet.derivePath(derivePath);
+  //     setAddress(getAddress(derivedWallet));
+  //   }
+  // };
   console.log('wallet', wallet);
   return (
     <div
@@ -71,7 +102,7 @@ function Bitcoin({ mnemonic }: { mnemonic: string }) {
             onChange={(e) => setAddress(e.target.value)}
           />
         </p>
-        <p>
+        {/* <p>
           extendedKey：
           <Input
             style={{ width: '100%', marginTop: 10 }}
@@ -79,8 +110,8 @@ function Bitcoin({ mnemonic }: { mnemonic: string }) {
             value={extendedKey}
             onChange={(e) => setExtendedKey(e.target.value)}
           />
-        </p>
-        <Input
+        </p> */}
+        {/* <Input
           style={{ width: '100%', marginTop: 10 }}
           placeholder="输入地址路径"
           value={derivePath}
@@ -91,7 +122,7 @@ function Bitcoin({ mnemonic }: { mnemonic: string }) {
           onClick={deriveAddress}
         >
           通过 xpub + derive path 推导出 address
-        </Button>
+        </Button> */}
         <p>
           publicKey
           <Input
@@ -105,7 +136,19 @@ function Bitcoin({ mnemonic }: { mnemonic: string }) {
           style={{ marginTop: 10, width: '100%' }}
           onClick={publicKeyToAddress}
         >
-          通过 publicKey 推导出 address
+          通过 publicKey 推导出 legacy address
+        </Button>
+        <Button
+          style={{ marginTop: 10, width: '100%' }}
+          onClick={publicKeyToAddress1}
+        >
+          通过 publicKey 推导 segwit (compatible)
+        </Button>
+        <Button
+          style={{ marginTop: 10, width: '100%' }}
+          onClick={publicKeyToAddress2}
+        >
+          通过 publicKey 推导 segwit (native)
         </Button>
       </div>
       <Divider />
