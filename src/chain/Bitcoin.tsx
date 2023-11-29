@@ -4,7 +4,6 @@ import * as bitcoin from 'bitcoinjs-lib';
 import * as bip39 from 'bip39';
 import BIP32Factory from 'bip32';
 import * as ecc from 'tiny-secp256k1';
-import { BIP32Interface } from 'bip32';
 import { ECPairFactory, ECPairAPI, ECPairInterface } from 'ecpair';
 import * as tinysecp from 'tiny-secp256k1';
 const path = "m/44'/0'/0'/0/0";
